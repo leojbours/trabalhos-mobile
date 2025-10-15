@@ -1,0 +1,9 @@
+{
+  "name": "app-de-filmes",
+  "slug": "app-de-filmes",
+  "plugins": [
+    "expo-router",
+    "expo-sqlite"
+  ],
+  "scheme": "app-de-treino"
+}
