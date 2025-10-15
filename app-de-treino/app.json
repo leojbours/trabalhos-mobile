@@ -1,0 +1,9 @@
+{
+  "name": "app-de-treino",
+  "slug": "app-de-treino",
+  "plugins": [
+    "expo-router",
+    "expo-sqlite"
+  ],
+  "scheme": "app-de-treino"
+}
