@@ -1,0 +1,8 @@
+{
+  "name": "conumindoApi",
+  "slug": "conumindoApi",
+  "plugins": [
+    "expo-router"
+  ],
+  "scheme": "your-app-scheme"
+}
