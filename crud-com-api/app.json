@@ -1,0 +1,7 @@
+{
+  "name": "crud-com-api",
+  "slug": "crud-com-api",
+  "plugins": [
+    "expo-router"
+  ]
+}
