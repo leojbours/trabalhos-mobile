@@ -25,7 +25,6 @@ async function sendItemToAPI(name, description, price) {
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({name, description, price}),
   });
-  console.log(response.ok)
   return response.ok;
 }
 
