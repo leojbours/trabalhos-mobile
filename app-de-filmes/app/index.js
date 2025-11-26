@@ -11,7 +11,7 @@ export default function Index() {
       <SafeAreaView>
         <View>
           <Link href="/tela1" asChild>
-            <PressableButton title="Ir para tela de filmes"  color={"#dfdfdfff"} borderRadius={6} />
+            <PressableButton title="Ir para tela de filmes" color={"#dfdfdfff"} borderRadius={6} />
           </Link>
         </View>
       </SafeAreaView>

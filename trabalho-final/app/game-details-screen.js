@@ -22,6 +22,7 @@ export default function App() {
                         <Text>Publisher: {publisher}</Text>
                         <Text>Genero: {genre}</Text>
                         <Text>Data de lançamento: {releaseDate}</Text>
+                        <Text>Slug: {slug}</Text>
                         <Text>Plataforma: {platform}</Text>
                         <View>
                             <Text>Descrição:</Text>
@@ -47,44 +48,4 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24
     },
-
-    fieldsContainer: {
-        gap: 8
-    },
-
-    defaultField: {
-        padding: 6,
-        borderRadius: 8,
-        borderColor: "#999",
-        borderWidth: 1,
-        height: 32
-    },
-
-    sideBySideFields: {
-        flex: 1
-    },
-
-    listItem: {
-        gap: 4,
-        flexShrink: 1,
-        flexGrow: 1
-    },
-
-    listRow: {
-        flex: 1,
-        width: "100%",
-        maxWidth: "100%",
-        flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 8,
-        borderRadius: 8,
-        borderColor: "#999",
-        borderWidth: 1,
-        padding: 8
-    },
-
-    listContainer: {
-        gap: 8,
-        marginTop: 16
-    }
 })

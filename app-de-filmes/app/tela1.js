@@ -107,7 +107,7 @@ export default function Index() {
                   <View style={styles.buttonsView}>
                       <PressableButton title={"Deletar Todas"} color={'#f16161ff'} handlePress={deleteAllMovies} borderRadius={6}></PressableButton>
                       <PressableButton title={"Salvar Edição"} color={'#bcccffff'} handlePress={saveEdit} borderRadius={6}></PressableButton>
-                      <PressableButton title={"Salvar"} color={'#bcccffff'} handlePress={addMovie} borderRadius={6}></PressableButton>
+                      <PressableButton title={"Salvar"} color={'#bcccffff'} handlePress={addMovie}></PressableButton>
                   </View>
                       <View style={{marginTop: 12}}>
                       <FlatList 

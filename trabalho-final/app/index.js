@@ -12,7 +12,7 @@ export default function Index() {
       }}
     >
         <Link href={"/register-screen"} asChild>
-            <PressableButton title={"Ir para tela de cadastro"} color={"#8ae3f6ff"} borderRadius={6}/>
+            <PressableButton title={"Ir para tela de cadastro"} color={"#8ae3f6ff"} borderRadius={8}/>
         </Link>
     </View>
   );

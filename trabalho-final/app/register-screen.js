@@ -140,17 +140,15 @@ export default function App() {
         </View>
         <View style={styles.defaultContainer}>
           <View style={styles.fieldsContainer}>
-            <View style={{ flexDirection: "row", width: "100%", gap: 8 }}>
-              <TextInput onChangeText={setTitle} value={title} placeholder="Nome" style={[styles.defaultField, styles.sideBySideFields]} placeholderTextColor={"#999"} />
-              <TextInput onChangeText={setPrice} value={price} placeholder="Preço" style={[styles.defaultField, styles.sideBySideFields]} placeholderTextColor={"#999"} />
-            </View>
+              <TextInput onChangeText={setTitle} value={title} placeholder="Nome" style={styles.defaultField} placeholderTextColor={"#999"} />
+              <TextInput onChangeText={setAuthor} value={author} placeholder="Autor" style={styles.defaultField} placeholderTextColor={"#999"} />
             <View style={{ flexDirection: "row", width: "100%", gap: 8 }}>
               <TextInput onChangeText={setSlug} value={itemSlug} placeholder="Slug" style={[styles.defaultField, styles.sideBySideFields]} placeholderTextColor={"#999"} />
-              <TextInput onChangeText={setAuthor} value={author} placeholder="Autor" style={[styles.defaultField, styles.sideBySideFields]} placeholderTextColor={"#999"} />
+              <TextInput onChangeText={setPrice} value={price} placeholder="Preço" style={[styles.defaultField, styles.sideBySideFields]} placeholderTextColor={"#999"} />
             </View>
             <View style={{ flexDirection: "row", width: "100%", gap: 8, justifyContent: "flex-end" }}>
-              <PressableButton title="Salvar Edição" color={"#90c8ffff"} handlePress={editItem} width="49%" />
-              <PressableButton title="Salvar" color={"#90c8ffff"} handlePress={saveItem} width="49%" />
+              <PressableButton title="Salvar Edição" color={"#90c8ffff"} handlePress={editItem} width="49%" borderRadius={8} />
+              <PressableButton title="Salvar" color={"#90c8ffff"} handlePress={saveItem} width="49%" borderRadius={8} />
             </View>
           </View>
           <View style={styles.listContainer}>
@@ -182,8 +180,8 @@ export default function App() {
                         <Text>{item.price}</Text>
                       </View>
                       <View style={{ marginLeft: "auto", marginRight: 4 }}>
-                        <PressableButton title={"E"} color={'#f1cf61ff'} handlePress={() => getItem(item.id)} width={28} />
-                        <PressableButton title={"X"} color={'#f16161ff'} handlePress={() => deleteItem(item.id)} width={28} />
+                        <PressableButton title={"E"} color={'#f1cf61ff'} handlePress={() => getItem(item.id)} width={28} borderRadius={8} />
+                        <PressableButton title={"X"} color={'#f16161ff'} handlePress={() => deleteItem(item.id)} width={28} borderRadius={8} />
                       </View>
                     </View>
                   </Pressable>
