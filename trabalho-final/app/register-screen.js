@@ -1,7 +1,8 @@
-import { View, Text, TextInput, StyleSheet, FlatList } from "react-native";
+import { View, Text, TextInput, StyleSheet, FlatList, Pressable } from "react-native";
 import PressableButton from "../components/PressableButton";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
+import { Link, router } from "expo-router";
 import { debounce } from "../util/debounce";
 
 async function getItemsFromAPI() {
@@ -23,8 +24,8 @@ async function getItemFromAPI(id) {
 async function sendItemToAPI(title, slug, price, developer) {
   const response = await fetch("http://177.44.248.50:8080/games", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({title, slug, price, developer}),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title, slug, price, developer }),
   });
   return response.ok;
 }
@@ -32,8 +33,8 @@ async function sendItemToAPI(title, slug, price, developer) {
 async function sendEditToAPI(id, title, slug, price, developer) {
   const response = await fetch(`http://177.44.248.50:8080/games/${id}`, {
     method: "PUT",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({title, slug, price, developer}),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title, slug, price, developer }),
   });
   return response.ok;
 }
@@ -41,17 +42,17 @@ async function sendEditToAPI(id, title, slug, price, developer) {
 async function deleteFromAPI(id) {
   const response = await fetch(`http://177.44.248.50:8080/games/${id}`, {
     method: "DELETE",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
   });
   return response.ok;
 }
 
 async function searchAPI(text) {
-    const response = await fetch(`http://177.44.248.50:8080/games/search?q=${text}`);
-    if (response.ok) {
-        const payload = await response.json();
-        return payload;
-    }
+  const response = await fetch(`http://177.44.248.50:8080/games/search?q=${text}`);
+  if (response.ok) {
+    const payload = await response.json();
+    return payload;
+  }
 }
 
 export default function App() {
@@ -82,7 +83,7 @@ export default function App() {
   }
 
   async function saveItem() {
-    const ok = await sendItemToAPI(title, itemSlug, Number(price));
+    const ok = await sendItemToAPI(title, itemSlug, Number(price), author);
     if (ok) {
       setTitle("");
       setSlug("");
@@ -94,7 +95,7 @@ export default function App() {
 
   async function editItem() {
     if (!editingId) return;
-    const ok = await sendEditToAPI(editingId, title, itemSlug, Number(price));
+    const ok = await sendEditToAPI(editingId, title, itemSlug, Number(price), author);
     if (ok) {
       setTitle("");
       setSlug("");
@@ -119,12 +120,12 @@ export default function App() {
   function onSearchItem(text) {
     setSearchText(text);
     searchDebounce(() => {
-        if (!text) {
-            loadItems();
-        } else {
-            search(text);
-        } 
-    }, 180 );
+      if (!text) {
+        loadItems();
+      } else {
+        search(text);
+      }
+    }, 180);
   }
 
   useEffect(() => {
@@ -134,40 +135,62 @@ export default function App() {
   return (
     <SafeAreaProvider style={styles.defaultContainer}>
       <SafeAreaView style={styles.defaultContainer}>
+        <View style={{ alignItems: "flex-start" }}>
+          <PressableButton title={'<-'} handlePress={() => router.back()} style={{ height: 24 }} />
+        </View>
         <View style={styles.defaultContainer}>
           <View style={styles.fieldsContainer}>
-            <View style={{flexDirection: "row", width: "100%", gap: 8}}>
-              <TextInput onChangeText={setTitle} value={title} placeholder="Nome" style={[styles.defaultField, styles.sideBySideFields]} placeholderTextColor={"#999"}/>
-              <TextInput onChangeText={setPrice} value={price} placeholder="Preço" style={[styles.defaultField, styles.sideBySideFields]} placeholderTextColor={"#999"}/>
+            <View style={{ flexDirection: "row", width: "100%", gap: 8 }}>
+              <TextInput onChangeText={setTitle} value={title} placeholder="Nome" style={[styles.defaultField, styles.sideBySideFields]} placeholderTextColor={"#999"} />
+              <TextInput onChangeText={setPrice} value={price} placeholder="Preço" style={[styles.defaultField, styles.sideBySideFields]} placeholderTextColor={"#999"} />
             </View>
-            <View style={{flexDirection: "row", width: "100%", gap: 8}}>
-                <TextInput onChangeText={setSlug} value={itemSlug} placeholder="Slug" style={[styles.defaultField, styles.sideBySideFields]} placeholderTextColor={"#999"}/>
-                <TextInput onChangeText={setAuthor} value={author} placeholder="Autor" style={[styles.defaultField, styles.sideBySideFields]} placeholderTextColor={"#999"}/>
+            <View style={{ flexDirection: "row", width: "100%", gap: 8 }}>
+              <TextInput onChangeText={setSlug} value={itemSlug} placeholder="Slug" style={[styles.defaultField, styles.sideBySideFields]} placeholderTextColor={"#999"} />
+              <TextInput onChangeText={setAuthor} value={author} placeholder="Autor" style={[styles.defaultField, styles.sideBySideFields]} placeholderTextColor={"#999"} />
             </View>
-            <View style={{flexDirection: "row", width: "100%", gap: 8, justifyContent: "flex-end"}}>              
-                <PressableButton title="Salvar Edição" color={"#90c8ffff"} handlePress={editItem} width="49%"/>
-                <PressableButton title="Salvar" color={"#90c8ffff"} handlePress={saveItem} width="49%"/>
+            <View style={{ flexDirection: "row", width: "100%", gap: 8, justifyContent: "flex-end" }}>
+              <PressableButton title="Salvar Edição" color={"#90c8ffff"} handlePress={editItem} width="49%" />
+              <PressableButton title="Salvar" color={"#90c8ffff"} handlePress={saveItem} width="49%" />
             </View>
           </View>
           <View style={styles.listContainer}>
-            <TextInput onChangeText={onSearchItem} placeholder="Pesquise..." style={styles.defaultField} placeholderTextColor={"#999"}/>
-            <FlatList 
-            data={items}
-            renderItem={({item}) => (
-              <View style={styles.listRow}>
-                <View style={styles.listItem}>
-                  <Text>{item.title}</Text>
-                  <Text>{item.slug}</Text>
-                  <Text>{item.price}</Text>
-                </View>
-                <View style={{marginLeft: "auto", marginRight: 4}}>
-                  <PressableButton title={"E"} color={'#f1cf61ff'} handlePress={() => getItem(item.id)} width={28}/>
-                  <PressableButton title={"X"} color={'#f16161ff'} handlePress={() => deleteItem(item.id)} width={28}/>
-                </View>
-              </View>
-            )}/>
+            <TextInput onChangeText={onSearchItem} placeholder="Pesquise..." style={styles.defaultField} placeholderTextColor={"#999"} />
+            <FlatList
+              data={items}
+              renderItem={({ item }) => (
+                <Link href={{
+                  pathname: "/game-details-screen",
+                  params: {
+                    title: item.title,
+                    slug: item.slug,
+                    description: item.description,
+                    developer: item.developer,
+                    publisher: item.publisher,
+                    genre: item.genre,
+                    platform: item.platform,
+                    releaseDate: item.release_date,
+                    price: item.price
+                  }
+                }}
+                  asChild
+                >
+                  <Pressable>
+                    <View style={styles.listRow}>
+                      <View style={styles.listItem} onC>
+                        <Text>{item.title}</Text>
+                        <Text>{item.slug}</Text>
+                        <Text>{item.price}</Text>
+                      </View>
+                      <View style={{ marginLeft: "auto", marginRight: 4 }}>
+                        <PressableButton title={"E"} color={'#f1cf61ff'} handlePress={() => getItem(item.id)} width={28} />
+                        <PressableButton title={"X"} color={'#f16161ff'} handlePress={() => deleteItem(item.id)} width={28} />
+                      </View>
+                    </View>
+                  </Pressable>
+                </Link>
+              )} />
           </View>
-       </View>
+        </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );
